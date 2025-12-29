@@ -9,7 +9,10 @@
 gizliSayi = Ilhan_Faruk_Karaca_250707110_BM103_AltFonksiyon1;%fonksiyon çağrılarak 4 basamaklı bir sayı alınıyor
 [gizliTork,gizliKutle] = TorkKutleHesapla(gizliSayi); %fonksiyonla gizli sayının torku ve kütlesi hesaplanıyor
 sayac=0;%sayac ilk işlem için 0'a tanımlanıyor
-oyunGecmisi = []; %her işlemin kaydının tutulucağı vektör
+tahminIndexi =[];%tahmin sırası için satır vektörü
+tahminSayi = [];%tahmin edilen sayılar için satır vektörü
+tahminDeltaTork = [];%tahminlerin sayıların delta torkları için satır vektörü
+tahminDeltaKutle = [];%tahmin sayıların  delta kütleleri satır için vektörü
 while true
     tahmin = input("1000 ile 9999 arası bir sayı gir: ");%kullanıcıdan 4 basamaklı bir sayı isteniyor
     if tahmin<=9999 && tahmin>=1000 &&floor(tahmin)==tahmin %önce istenilen aralıkta ve tam sayımı diye sorgulanıyor
@@ -19,14 +22,18 @@ while true
            deltaTork = gizliTork-tahminTork;%delta tork hesaplanıyor
            deltaKutle = gizliKutle - tahminKutle;%delta kütle hesaplanıyor
            sayac = sayac +1;%sayac artırılıyor
-           buTurunKaydi = [sayac,tahmin,deltaTork,deltaKutle];%bu turdu yapılan tahminin numarası tahminin kendisi delta tork ve delta kütle satır vektörüne aktarılıyor
-           oyunGecmisi = [oyunGecmisi;buTurunKaydi];%kayıt alınan satır vektörü matrise yeni satır olarak ayarlanıyor
+           tahminIndexi = [tahminIndexi,sayac];%tahmin edilen sayının indexi ekleniyor
+           tahminSayi = [tahminSayi,tahmin]; %tahmin edilen sayı ekleniyor
+           tahminDeltaTork =[tahminDeltaTork,deltaTork]; %tahmin sonucu oluşan delta indise eklendi
+           tahminDeltaKutle = [tahminDeltaKutle,deltaKutle];%tahmin sonucu oluşan delta kütle indise eklendi
            if gizliSayi == tahmin%tahmin edilen sayının gizli sayıya eşit olup olmadığı sorgulanıyor
                disp("Tebrikler Doğru Sayıyı Buldunuz")%eğer eşitse doğru sayıyı buldu demekktir ve kullanıcıya gerekli bilgiler veriliyor
                fprintf("Doğru Sayı: %g \n",gizliSayi)
-               disp('   Deneme    Tahmin    D.Tork    D.Kutle')
-               disp("--------------------------------------------")
-               disp(oyunGecmisi)
+               fprintf('Deneme\tTahmin\t\tD.Tork\t\tD.Kutle\n');
+               disp("-------------------------------------------------------")
+               for i=1:length(tahminIndexi)
+                   fprintf('%g\t\t%g\t\t%g\t\t%g\n',tahminIndexi(i),tahminSayi(i),tahminDeltaTork(i),tahminDeltaKutle(i))
+               end
                break;%tüm veriler kullanıcıya gösterildikten sonra programın devam etmemesi için programı durduyor
            else %eşit değilse kullanıcıya gösterilicek veriler yazılıyor
                fprintf("Tahmininiz: %g \n",tahmin)
@@ -36,9 +43,9 @@ while true
                disp("----------------------")
            end
         else%benzersiz bir sayı değilse uyarıyor
-            disp("Hatalı sayı girişi yaptınız")
+            disp("Benzersiz bir sayı olmalı")
         end
     else%istenilen aralıkta değilse uyarıyor
-        disp("Hatalı sayı girişi yaptınız")
+        disp("1000 ila 9999 arasında bir sayı olmalı")
     end
 end
