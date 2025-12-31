@@ -36,11 +36,17 @@ while true
                end
                break;%tüm veriler kullanıcıya gösterildikten sonra programın devam etmemesi için programı durduyor
            else %eşit değilse kullanıcıya gösterilicek veriler yazılıyor
-               fprintf("Tahmininiz: %g \n",tahmin)
-               disp("----------------------")
-               fprintf("Delta Tork: %g \n",deltaTork)
-               fprintf("Delta Kütle: %g \n",deltaKutle)
-               disp("----------------------")
+               if deltaTork==0 && deltaKutle==0
+                   disp("UYARI: Statik Denge Tespit Edildi! Terazi mükemmel şekilde dengede, ancak sayısal yapılandırma yanlış. Oyun devam edecektir. Çakışmayı kırmak için lütfen farklı bir rakam kombinasyonu deneyin.");
+                   disp("----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+               else
+                   disp("----------------------")
+                   fprintf("Tahmininiz: %g \n",tahmin)
+                   disp("----------------------")
+                   fprintf("Delta Tork: %g \n",deltaTork)
+                   fprintf("Delta Kütle: %g \n",deltaKutle)
+                   disp("----------------------")
+               end
            end
         else%benzersiz bir sayı değilse uyarıyor
             disp("Benzersiz bir sayı olmalı")
